@@ -29,11 +29,13 @@ public class Restaurant {
       return false;
     }else {
       Restaurant newRestaurant = (Restaurant) anotherRestaurant;
-      return this.getName().equals(newRestaurant.getName());
+      return this.getName().equals(newRestaurant.getName()) &&
+        this.getId() == newRestaurant.getId() &&
+        this.getCuisineId() == newRestaurant.getCuisineId();
     }
   }
   public static List <Restaurant> all(){
-    String sql = "SELECT id, name FROM restaurants";
+    String sql = "SELECT id, name, cuisine_id FROM restaurants";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Restaurant.class);
     }
@@ -41,9 +43,10 @@ public class Restaurant {
 
   public void save(){
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO restaurants (name) VALUES (:name)";
+      String sql = "INSERT INTO restaurants (name, cuisine_id) VALUES (:name, :cuisine_id)";
       this.id = (int) con.createQuery(sql, true)
       .addParameter("name", this.name)
+      .addParameter("cuisine_id", this.cuisine_id)
       .executeUpdate()
       .getKey();
     }

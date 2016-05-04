@@ -68,5 +68,4 @@ public class RestaurantTest {
     Restaurant savedRestaurant = Restaurant.find(myRestaurant.getId());
     assertEquals(savedRestaurant.getCuisineId(), myCuisine.getId());
   }
-
 }
