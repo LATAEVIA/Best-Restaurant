@@ -11,4 +11,8 @@ public class Cuisine {
 
   }
 
+  public String getName() {
+    return name;
+  }
+
 }
