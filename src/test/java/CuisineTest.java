@@ -65,11 +65,11 @@ public class CuisineTest {
   }
 
 
-  // @Test
-  // public void Cuisine_findCuisineInDataBase_true() {
-  //   Cuisine myCuisine = new Cuisine ("Italian");
-  //   myCuisine.save();
-  //   Cuisine savedCuisine =Cuisine.find(myCuisine.getId());
-  //   assertTrue(myCuisine.equals(savedCuisine));
-  // }
+  @Test
+  public void Cuisine_findCuisineInDataBase_true() {
+    Cuisine myCuisine = new Cuisine ("Italian");
+    myCuisine.save();
+    Cuisine savedCuisine =Cuisine.find(myCuisine.getId());
+    assertTrue(myCuisine.equals(savedCuisine));
+  }
 }
