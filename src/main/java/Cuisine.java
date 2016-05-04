@@ -1,19 +1,13 @@
 import java.util.List;
 import org.sql2o.*;
-// import java.util.ArrayList;
 
 public class Cuisine {
   private String name;
   private int id;
-  // private List<Cuisine>
-
 
 
   public Cuisine(String name) {
     this.name = name;
-
-
-
   }
 
   public String getName() {

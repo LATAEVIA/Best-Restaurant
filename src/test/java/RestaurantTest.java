@@ -20,6 +20,15 @@ public class RestaurantTest {
     }
   }
 
-
+  @Test
+  public void restaurant_instantiatesCorrectly_true() {
+    Restaurant myRestaurant = new Restaurant("Olive Garden");
+    assertTrue(myRestaurant instanceof Restaurant);
+  }
+  @Test
+  public void restaurant_instantiatesWithName_String() {
+    Restaurant myRestaurant = new Restaurant("Olive Garden");
+    assertEquals("Olive Garden", myRestaurant.getName());
+  }
 
 }

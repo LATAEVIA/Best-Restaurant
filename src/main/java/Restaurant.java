@@ -4,7 +4,7 @@ import org.sql2o.*;
 public class Restaurant {
 
 
-  public Restaurant(String description, int categoryId) {
+  public Restaurant(String name) {
 
 
   }
