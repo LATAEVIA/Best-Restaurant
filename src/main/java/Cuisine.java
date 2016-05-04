@@ -5,13 +5,14 @@ import org.sql2o.*;
 public class Cuisine {
   private String name;
   private int id;
-  private List cuisineAll;
+  // private List<Cuisine>
+
 
 
   public Cuisine(String name) {
     this.name = name;
 
-    // this.id=id;
+
 
   }
 
@@ -23,13 +24,14 @@ public class Cuisine {
     return id;
   }
 
-  public List<Cuisine> all(){
+  public static List<Cuisine> all(){
     String sql = "SELECT id, name FROM cuisines";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Cuisine.class);
     }
   }
 
+@Override
   public boolean equals(Object otherCuisine) {
     if(!(otherCuisine instanceof Cuisine)) {
       return false;
@@ -39,5 +41,23 @@ public class Cuisine {
     }
   }
 
+  public void save() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO cuisines (name) VALUES (:name)";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("name", this.name)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+  // 
+  // public String find(int id) {
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String sql = "INSERT INTO cuisines (name) VALUES (:name)";
+  //     con.createQuery(sql)
+  //       .addParameter("id", this.id)
+  //       .executeUpdate();
+  //   }
+  // }
 
 }

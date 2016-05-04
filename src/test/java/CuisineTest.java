@@ -39,17 +39,37 @@ public class CuisineTest {
     assertTrue(firstCuisine.equals(secondCuisine));
   }
 
+
+  @Test
+  public void Cuisine_saveIfCuisinetheSame_true() {
+    Cuisine myCuisine = new Cuisine ("Italian");
+    myCuisine.save();
+    assertTrue(Cuisine.all().get(0).equals(myCuisine));
+  }
+
+  @Test
+  public void Cuisine_saveAssigneIdToCuisineObj_int() {
+    Cuisine myCuisine = new Cuisine ("Italian");
+    myCuisine.save();
+    Cuisine savedCuisine = Cuisine.all().get(0);
+    assertEquals(savedCuisine.getId(), myCuisine.getId());
+  }
+
+
+
+  @Test
+  public void Cuisine_getAllReturnAll_true() {
+    Cuisine myCuisine = new Cuisine ("Italian");
+    myCuisine.save();
+    assertTrue(Cuisine.all().contains(myCuisine));
+  }
+
+
   // @Test
-  // public void Cuisine_getAllReturnAll_list() {
+  // public void Cuisine_findCuisineInDataBase_true() {
   //   Cuisine myCuisine = new Cuisine ("Italian");
   //   myCuisine.save();
-  //   assertEquals(myCuisine.equals(Cuisine.all()));
-  // }
-
-
-  // @Test
-  // public void Cuisine_getIdReturnId_int() {
-  //   Cuisine myCuisine = new Cuisine ("Italian");
-  //   assertEquals(1, myCuisine.getId());
+  //   Cuisine savedCuisine =Cuisine.find(myCuisine.getId());
+  //   assertTrue(myCuisine.equals(savedCuisine));
   // }
 }
