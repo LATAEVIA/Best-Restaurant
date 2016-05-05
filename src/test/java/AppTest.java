@@ -1,7 +1,6 @@
 
 import org.fluentlenium.adapter.FluentTest;
 import org.junit.ClassRule;
-// import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,30 +32,25 @@ public class AppTest extends FluentTest {
 
   @Test
     public void getCuisineReturnSamePage() {
-      goTo("http://localhost:4567/");
-      assertThat(pageSource()).contains("Best Restaurants App");
-      fill("#cuisine-name").with("Italian");
-      submit(".btn");
+      Cuisine myCuisine = new Cuisine ("Italian");
+      myCuisine.save();
+      String cuisinePath = String.format("http://localhost:4567/cuisines/%d", myCuisine.getId());
+      goTo(cuisinePath);
       assertThat(pageSource()).contains("Italian");
     }
 
   @Test
-    public void getCuisineIdReturnRestaurantAppend() {
-      goTo("http://localhost:4567/");
-      fill("#cuisine-name").with("Italian");
-      submit(".btn");
-      click("a", withText("Italian"));
-      assertThat(pageSource()).contains("List");
-    }
-
-  @Test
-    public void getRestaurantReturnWithCuisineId() {
-      goTo("http://localhost:4567/");
-      fill("#cuisine-name").with("Italian");
-      submit(".btn");
-      click("a", withText("Italian"));
-      assertThat(pageSource()).contains("List of all restaurants with Italian cuisine");
-      fill("#restaurant-name").with("Olive garden");
+    public void getCuisineGetMultipleRestaurantsReturnAll() {
+      Cuisine myCuisine = new Cuisine ("Japanese");
+      myCuisine.save();
+      Restaurant firstRestaurant = new Restaurant ("SushiLand", myCuisine.getId());
+      firstRestaurant.save();
+      Restaurant secondRestaurant = new Restaurant ("SashimiLand", myCuisine.getId());
+      secondRestaurant.save();
+      String cuisinePath = String.format("http://localhost:4567/cuisines/%d", myCuisine.getId());
+      goTo(cuisinePath);
+      assertThat(pageSource()).contains("SushiLand");
+      assertThat(pageSource()).contains("SashimiLand");
     }
 
 }
