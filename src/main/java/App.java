@@ -50,23 +50,31 @@ public class App {
       String restaurantName = request.queryParams("restaurant-name"); //olive garden
       Cuisine existingCuisine = Cuisine.find(Integer.parseInt(request.queryParams("cuisineId")));
       Restaurant newRestaurant = new Restaurant(restaurantName,existingCuisine.getId());
-      System.out.println(newRestaurant.getCuisineId());
       newRestaurant.save();
       String url = String.format("/cuisines/%d", existingCuisine.getId());
       response.redirect(url);
-      // model.put("cuisine",existingCuisine);
-      // model.put("template", "templates/restaurant-Added.vtl");
       return null;
     });
 
+    get("/restaurants/:id", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Restaurant existingRestaurant = Restaurant.find(Integer.parseInt(request.params(":id")));
+      model.put("restaurant", existingRestaurant);
+      model.put("reviews", existingRestaurant.getReviews());
+      model.put("template", "templates/reviews.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
-    // get("/restaurants", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   Cuisine newCuisine = Cuisine.find(Integer.parseInt(request.params(":id")));
-    //   model.put("restaurants", Restaurant.all());
-    //   model.put("template", "templates/restaurants.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
+    post("/reviews", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String reviewDescription = request.queryParams("description"); //olive garden
+      Restaurant existingRestaurant = Restaurant.find(Integer.parseInt(request.queryParams("restaurantId")));
+      Review newReview = new Review(reviewDescription,existingRestaurant.getId());
+      newReview.save();
+      String url = String.format("/restaurants/%d", existingRestaurant.getId());
+      response.redirect(url);
+      return null;
+    });
 
   }
 }
